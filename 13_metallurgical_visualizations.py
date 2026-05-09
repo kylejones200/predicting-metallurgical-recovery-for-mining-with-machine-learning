@@ -1,6 +1,12 @@
 import sys
 import os
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 # Add parent directory to path to import plot_style
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from plot_style import set_tufte_defaults, apply_tufte_style, save_tufte_figure, COLORS
@@ -88,14 +94,14 @@ def create_main_recovery_prediction_plot():
     """
     Create predicted vs actual recovery plot.
     """
-    print("Generating main recovery prediction visualization...")
+    logger.info("Generating main recovery prediction visualization...")
     
     # Generate data
     X, y = generate_metallurgical_data(n_samples=800)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
     
     # Train model
-    print("  Training Gradient Boosting model...")
+    logger.info("  Training Gradient Boosting model...")
     model = GradientBoostingRegressor(n_estimators=150, max_depth=5, learning_rate=0.1, random_state=42)
     model.fit(X_train, y_train)
     
@@ -161,21 +167,21 @@ def create_main_recovery_prediction_plot():
                 dpi=300, bbox_inches='tight')
     plt.close()
     
-    print(f"✓ Main recovery prediction visualization saved")
-    print(f"  Test R²: {test_r2:.3f}, MAE: {test_mae:.2f}%")
+    logger.info(f"✓ Main recovery prediction visualization saved")
+    logger.info(f"  Test R²: {test_r2:.3f}, MAE: {test_mae:.2f}%")
 
 def create_feature_importance_plot():
     """
     Create feature importance bar chart.
     """
-    print("Generating feature importance visualization...")
+    logger.info("Generating feature importance visualization...")
     
     # Generate data
     X, y = generate_metallurgical_data(n_samples=800)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
     
     # Train model
-    print("  Training model for feature importance...")
+    logger.info("  Training model for feature importance...")
     model = GradientBoostingRegressor(n_estimators=150, max_depth=5, learning_rate=0.1, random_state=42)
     model.fit(X_train, y_train)
     
@@ -232,27 +238,27 @@ def create_feature_importance_plot():
                 dpi=300, bbox_inches='tight')
     plt.close()
     
-    print("✓ Feature importance visualization saved")
+    logger.info("✓ Feature importance visualization saved")
 
 def main():
     """Generate all visualizations for Blog 13."""
     set_tufte_defaults()
-    print("="*70)
-    print("Blog 13: Metallurgical Recovery - Visualizations")
-    print("="*70)
-    print()
+    logger.info("="*70)
+    logger.info("Blog 13: Metallurgical Recovery - Visualizations")
+    logger.info("="*70)
+    logger.info()
     
     create_main_recovery_prediction_plot()
     create_feature_importance_plot()
     
-    print()
-    print("="*70)
-    print("All visualizations generated successfully!")
-    print("="*70)
-    print()
-    print("Files created:")
-    print("  - 13_metallurgical_recovery_main.png")
-    print("  - 13_metallurgical_feature_importance.png")
+    logger.info()
+    logger.info("="*70)
+    logger.info("All visualizations generated successfully!")
+    logger.info("="*70)
+    logger.info()
+    logger.info("Files created:")
+    logger.info("  - 13_metallurgical_recovery_main.png")
+    logger.info("  - 13_metallurgical_feature_importance.png")
 
 if __name__ == "__main__":
     main()
