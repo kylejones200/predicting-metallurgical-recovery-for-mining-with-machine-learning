@@ -90,7 +90,7 @@ def generate_metallurgical_data(n_samples=800):
     
     return X, recovery
 
-def create_main_recovery_prediction_plot():
+def create_main_recovery_prediction_plot(plot: bool = False):
     """
     Create predicted vs actual recovery plot.
     """
@@ -116,61 +116,62 @@ def create_main_recovery_prediction_plot():
     test_mae = mean_absolute_error(y_test, y_pred_test)
     
     # Create figure
-    fig, ax = plt.subplots(figsize=(8, 8))
+    if plot:
+        fig, ax = plt.subplots(figsize=(8, 8))
     
     # Scatter plots
-    ax.scatter(y_train, y_pred_train, alpha=0.5, s=30, 
-              edgecolors='black', linewidth=0.5, c='#0074D9',
-              label=f'Training (n={len(y_train)})')
+        ax.scatter(y_train, y_pred_train, alpha=0.5, s=30, 
+                  edgecolors='black', linewidth=0.5, c='#0074D9',
+                  label=f'Training (n={len(y_train)})')
     
-    ax.scatter(y_test, y_pred_test, alpha=0.7, s=50, 
-              edgecolors='black', linewidth=0.8, c='#FF851B',
-              label=f'Test (n={len(y_test)})')
+        ax.scatter(y_test, y_pred_test, alpha=0.7, s=50, 
+                  edgecolors='black', linewidth=0.8, c='#FF851B',
+                  label=f'Test (n={len(y_test)})')
     
     # Perfect prediction line
-    min_val = min(y.min(), y_pred_train.min(), y_pred_test.min())
-    max_val = max(y.max(), y_pred_train.max(), y_pred_test.max())
-    ax.plot([min_val, max_val], [min_val, max_val], 
-           'k--', linewidth=2, alpha=0.7, label='Perfect Prediction')
+        min_val = min(y.min(), y_pred_train.min(), y_pred_test.min())
+        max_val = max(y.max(), y_pred_train.max(), y_pred_test.max())
+        ax.plot([min_val, max_val], [min_val, max_val], 
+               'k--', linewidth=2, alpha=0.7, label='Perfect Prediction')
     
     # ±5% error bands
-    ax.fill_between([min_val, max_val], 
-                    [min_val * 0.95, max_val * 0.95],
-                    [min_val * 1.05, max_val * 1.05],
-                    alpha=0.1, color='gray', label='±5% Error Band')
+        ax.fill_between([min_val, max_val], 
+                        [min_val * 0.95, max_val * 0.95],
+                        [min_val * 1.05, max_val * 1.05],
+                        alpha=0.1, color='gray', label='±5% Error Band')
     
     # Apply minimalist style
-    apply_minimalist_style_manual(ax)
+        apply_minimalist_style_manual(ax)
     
-    ax.set_xlabel('Actual Recovery (%)', fontsize=11)
-    ax.set_ylabel('Predicted Recovery (%)', fontsize=11)
-    ax.set_title('Metallurgical Recovery Prediction', 
-                 fontsize=13, fontweight='bold', loc='left', pad=20)
+        ax.set_xlabel('Actual Recovery (%)', fontsize=11)
+        ax.set_ylabel('Predicted Recovery (%)', fontsize=11)
+        ax.set_title('Metallurgical Recovery Prediction', 
+                     fontsize=13, fontweight='bold', loc='left', pad=20)
     
-    ax.legend(loc='lower right', frameon=False, fontsize=9)
+        ax.legend(loc='lower right', frameon=False, fontsize=9)
     
     # Add metrics box
-    metrics_text = (f'Training:\n  R² = {train_r2:.3f}\n  MAE = {train_mae:.2f}%\n\n'
-                   f'Test:\n  R² = {test_r2:.3f}\n  MAE = {test_mae:.2f}%')
+        metrics_text = (f'Training:\n  R² = {train_r2:.3f}\n  MAE = {train_mae:.2f}%\n\n'
+                       f'Test:\n  R² = {test_r2:.3f}\n  MAE = {test_mae:.2f}%')
     
-    ax.text(0.05, 0.95, metrics_text,
-           transform=ax.transAxes, fontsize=9,
-           verticalalignment='top',
-           bbox=dict(boxstyle='round', facecolor='white', edgecolor='black', linewidth=1))
+        ax.text(0.05, 0.95, metrics_text,
+               transform=ax.transAxes, fontsize=9,
+               verticalalignment='top',
+               bbox=dict(boxstyle='round', facecolor='white', edgecolor='black', linewidth=1))
     
-    ax.set_aspect('equal')
-    ax.set_xlim(min_val - 2, max_val + 2)
-    ax.set_ylim(min_val - 2, max_val + 2)
+        ax.set_aspect('equal')
+        ax.set_xlim(min_val - 2, max_val + 2)
+        ax.set_ylim(min_val - 2, max_val + 2)
     
-    plt.tight_layout()
-    plt.savefig('/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_recovery_main.png', 
-                dpi=300, bbox_inches='tight')
-    plt.close()
+        plt.tight_layout()
+        plt.savefig('/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_recovery_main.png', 
+                    dpi=300, bbox_inches='tight')
+        plt.close()
     
     logger.info(f"✓ Main recovery prediction visualization saved")
     logger.info(f"  Test R²: {test_r2:.3f}, MAE: {test_mae:.2f}%")
 
-def create_feature_importance_plot():
+def create_feature_importance_plot(plot: bool = False):
     """
     Create feature importance bar chart.
     """
@@ -194,49 +195,50 @@ def create_feature_importance_plot():
     indices = np.argsort(importances)[::-1]
     
     # Create figure
-    fig, ax = plt.subplots(figsize=(10, 6))
+    if plot:
+        fig, ax = plt.subplots(figsize=(10, 6))
     
-    colors = ['#FF4136' if i < 2 else '#2ECC40' if i < 4 else '#0074D9' 
-             for i in range(len(feature_names))]
+        colors = ['#FF4136' if i < 2 else '#2ECC40' if i < 4 else '#0074D9' 
+                 for i in range(len(feature_names))]
     
-    bars = ax.barh(range(len(feature_names)), importances[indices], 
-                   color=[colors[i] for i in indices],
-                   edgecolor='black', linewidth=1.5)
+        bars = ax.barh(range(len(feature_names)), importances[indices], 
+                       color=[colors[i] for i in indices],
+                       edgecolor='black', linewidth=1.5)
     
-    ax.set_yticks(range(len(feature_names)))
-    ax.set_yticklabels([feature_names[i] for i in indices], fontsize=10)
+        ax.set_yticks(range(len(feature_names)))
+        ax.set_yticklabels([feature_names[i] for i in indices], fontsize=10)
     
     # Add value labels
-    for i, (bar, val) in enumerate(zip(bars, importances[indices])):
-        width = bar.get_width()
-        ax.text(width, bar.get_y() + bar.get_height()/2.,
-               f'{val:.3f}',
-               ha='left', va='center', fontsize=9, 
-               fontweight='bold', color='black',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='white', 
-                        edgecolor='none', alpha=0.8))
+        for i, (bar, val) in enumerate(zip(bars, importances[indices])):
+            width = bar.get_width()
+            ax.text(width, bar.get_y() + bar.get_height()/2.,
+                   f'{val:.3f}',
+                   ha='left', va='center', fontsize=9, 
+                   fontweight='bold', color='black',
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', 
+                            edgecolor='none', alpha=0.8))
     
     # Apply minimalist style
-    apply_minimalist_style_manual(ax)
+        apply_minimalist_style_manual(ax)
     
-    ax.set_xlabel('Feature Importance (Gain)', fontsize=11)
-    ax.set_title('Feature Importance for Recovery Prediction', 
-                 fontsize=13, fontweight='bold', loc='left', pad=20)
-    ax.set_xlim(0, max(importances) * 1.25)
+        ax.set_xlabel('Feature Importance (Gain)', fontsize=11)
+        ax.set_title('Feature Importance for Recovery Prediction', 
+                     fontsize=13, fontweight='bold', loc='left', pad=20)
+        ax.set_xlim(0, max(importances) * 1.25)
     
     # Add legend
-    from matplotlib.patches import Patch
-    legend_elements = [
-        Patch(facecolor='black', edgecolor='black', label='Ore Properties'),
-        Patch(facecolor='black', edgecolor='black', label='Process Parameters'),
-        Patch(facecolor='black', edgecolor='black', label='Reagent Dosage')
-    ]
-    ax.legend(handles=legend_elements, loc='lower right', frameon=False, fontsize=9)
+        from matplotlib.patches import Patch
+        legend_elements = [
+            Patch(facecolor='black', edgecolor='black', label='Ore Properties'),
+            Patch(facecolor='black', edgecolor='black', label='Process Parameters'),
+            Patch(facecolor='black', edgecolor='black', label='Reagent Dosage')
+        ]
+        ax.legend(handles=legend_elements, loc='lower right', frameon=False, fontsize=9)
     
-    plt.tight_layout()
-    plt.savefig('/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_feature_importance.png', 
-                dpi=300, bbox_inches='tight')
-    plt.close()
+        plt.tight_layout()
+        plt.savefig('/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_feature_importance.png', 
+                    dpi=300, bbox_inches='tight')
+        plt.close()
     
     logger.info("✓ Feature importance visualization saved")
 
