@@ -1,37 +1,23 @@
+---
+author: "Kyle Jones"
+date_published: "October 9, 2025"
+date_exported_from_medium: "November 10, 2025"
+canonical_link: "https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c"
+---
+
 # Predicting Metallurgical Recovery for Mining with Machine Learning Barrick Gold's Goldstrike mine in Nevada optimized their recovery
-process in 2018 and improved gold recovery by 2% --- this translated
-to...
+process in 2018 and improved gold recovery by 2% --- this translated to...
 
-::::### Predicting Metallurgical Recovery for Mining with Machine Learning 
+### Predicting Metallurgical Recovery for Mining with Machine Learning 
 
-Barrick Gold's Goldstrike mine in Nevada optimized their recovery
-process in 2018 and improved gold recovery by 2% --- this translated to
-\$50 million in additional annual revenue without mining extra ore. The
-difference wasn't better geology or higher grades. It was understanding
-the relationship between ore characteristics and mill performance well
-enough to adjust processing parameters in real-time.
+Barrick Gold's Goldstrike mine in Nevada optimized their recovery process in 2018 and improved gold recovery by 2% --- this translated to \$50 million in additional annual revenue without mining extra ore. The difference wasn't better geology or higher grades. It was understanding the relationship between ore characteristics and mill performance well enough to adjust processing parameters in real-time.
 
-Metallurgical recovery --- the percentage of valuable metal successfully
-extracted from ore --- defines the gap between resource in the ground
-and revenue in the bank. A deposit with 2 g/t gold at 95% recovery
-generates more cash than 2.5 g/t at 75% recovery. Yet recovery is often
-the least predictable variable in mining economics, requiring months of
-expensive test work and still surprising operators when ore
-characteristics shift.
+Metallurgical recovery --- the percentage of valuable metal successfully extracted from ore --- defines the gap between resource in the ground and revenue in the bank. A deposit with 2 g/t gold at 95% recovery generates more cash than 2.5 g/t at 75% recovery. Yet recovery is often the least predictable variable in mining economics, requiring months of expensive test work and still surprising operators when ore characteristics shift.
 
-Machine learning augments metallurgical test work. By modeling the
-relationships between ore properties (grade, mineralogy, hardness, grain
-size) and recovery outcomes, engineers can forecast mill performance
-across varying ore types, simulate processing scenarios, and prioritize
-test campaigns where uncertainty is highest.
+Machine learning augments metallurgical test work. By modeling the relationships between ore properties (grade, mineralogy, hardness, grain size) and recovery outcomes, engineers can forecast mill performance across varying ore types, simulate processing scenarios, and prioritize test campaigns where uncertainty is highest.
 
 
-*Predicted vs actual gold recovery across 850 ore samples. The XGBoost
-model achieves R²=0.89, capturing the nonlinear relationships between
-sulfur content, grind size, mineral type, and liberation efficiency.
-Points colored by mineral type reveal that refractory sulfides (dark)
-systematically underperform flotation targets despite similar gold
-grades.*
+*Predicted vs actual gold recovery across 850 ore samples. The XGBoost model achieves R²=0.89, capturing the nonlinear relationships between sulfur content, grind size, mineral type, and liberation efficiency. Points colored by mineral type reveal that refractory sulfides (dark) systematically underperform flotation targets despite similar gold grades.*
 
 ### The Recovery Problem: Geology Meets Engineering
 Mining profitability rests on three pillars:
@@ -40,54 +26,36 @@ Mining profitability rests on three pillars:
 2.  [Cost --- Operational (\$/tonne mined and processed)]
 3.  [Recovery --- Metallurgical (% of contained metal extracted)]
 
-Grade is determined by nature. Cost is determined by efficiency.
-Recovery sits at the intersection of geology and engineering --- it
-depends on both what nature provided and how clever your processing is.
+Grade is determined by nature. Cost is determined by efficiency. Recovery sits at the intersection of geology and engineering --- it depends on both what nature provided and how clever your processing is.
 
 Traditional recovery estimation follows this workflow:
 
 1.  [Collect representative ore samples]
 2.  [Run lab-scale test work (flotation, leaching, roasting)]
-3.  [Fit empirical curves relating recovery to grade and
-    mineralogy]
+3.  [Fit empirical curves relating recovery to grade and mineralogy]
 4.  [Hope the curves generalize when ore characteristics change]
 
 This works when ore is homogeneous. It fails when:
 
-- Mineralogy varies --- Refractory sulfides require roasting; free gold
-  responds to gravity
-- Hardness changes --- Harder ore needs finer grinding for liberation
-  but consumes more energy
-- Grade fluctuates --- Recovery often correlates with grade in complex,
-  nonlinear ways
-- Processing conditions shift --- pH, reagents, retention time all
-  interact with ore properties
+- Mineralogy varies --- Refractory sulfides require roasting; free gold responds to gravity
+- Hardness changes --- Harder ore needs finer grinding for liberation but consumes more energy
+- Grade fluctuates --- Recovery often correlates with grade in complex, nonlinear ways
+- Processing conditions shift --- pH, reagents, retention time all interact with ore properties
 
-Machine learning models these interactions from historical data,
-enabling scenario analysis: "If we encounter ore with 3.5% sulfur and
-Bond Work Index of 18 kWh/t, what recovery should we expect?"
+Machine learning models these interactions from historical data, enabling scenario analysis: "If we encounter ore with 3.5% sulfur and Bond Work Index of 18 kWh/t, what recovery should we expect?"
 
 
 ### Data: Public Geochemistry and Metallurgical Test Results
-We combine three data sources to build a synthetic but realistic
-recovery dataset:
+We combine three data sources to build a synthetic but realistic recovery dataset:
 
-1.  [USGS Mineral Resources Data System (MRDS): Provides ore composition
-    and mineral type for known deposits worldwide.]
-2.  [Australian Geoscience Geochemical Atlas: Elemental assays (Au, Cu,
-    Fe, S, As, Ag) for various mineral systems.]
-3.  [Synthetic Metallurgical Relationships: Since complete public
-    recovery databases are rare, we generate recovery labels using
-    realistic physical relationships:]
+1.  [USGS Mineral Resources Data System (MRDS): Provides ore composition and mineral type for known deposits worldwide.]
+2.  [Australian Geoscience Geochemical Atlas: Elemental assays (Au, Cu, Fe, S, As, Ag) for various mineral systems.]
+3.  [Synthetic Metallurgical Relationships: Since complete public recovery databases are rare, we generate recovery labels using realistic physical relationships:]
 
-- Sulfur effect: High sulfur (refractory sulfides) reduces recovery
-  unless roasted
-- Hardness/grind interaction: Finer grinding improves liberation but
-  has diminishing returns
-- Grade correlation: Higher grades often achieve slightly better
-  recovery (cleaner separation)
-- Mineral type: Free-milling gold vs refractory vs oxide have distinct
-  recovery profiles
+- Sulfur effect: High sulfur (refractory sulfides) reduces recovery unless roasted
+- Hardness/grind interaction: Finer grinding improves liberation but has diminishing returns
+- Grade correlation: Higher grades often achieve slightly better recovery (cleaner separation)
+- Mineral type: Free-milling gold vs refractory vs oxide have distinct recovery profiles
 
 ```python
 import numpy as np
@@ -258,10 +226,7 @@ Mineral Type Distribution:
   oxide: 98 samples (9.8%)
 ```
 
-The mean recovery of 84.7% matches industry benchmarks for mixed gold
-operations. Free-milling ores (30%) represent high-grade, easily
-processed deposits. Refractory sulfides (25%) require roasting or
-pressure oxidation for liberation.
+The mean recovery of 84.7% matches industry benchmarks for mixed gold operations. Free-milling ores (30%) represent high-grade, easily processed deposits. Refractory sulfides (25%) require roasting or pressure oxidation for liberation.
 
 ### Feature Engineering for Metallurgical Prediction
 ```python
@@ -332,11 +297,7 @@ Feature Engineering:
   Total samples: 1000
 ```
 
-The `Au_S_ratio` captures refractory
-behavior: low ratios indicate gold locked in sulfides requiring
-pre-treatment. The `liberation_proxy`
-(BWI × grind size) represents the energy-liberation tradeoff central to
-comminution economics.
+The `Au_S_ratio` captures refractory behavior: low ratios indicate gold locked in sulfides requiring pre-treatment. The `liberation_proxy` (BWI × grind size) represents the energy-liberation tradeoff central to comminution economics.
 
 ### Model Training: Baseline to Gradient Boosting
 ```python
@@ -481,16 +442,9 @@ MODEL COMPARISON
   XGBoost MAE improvement: +30.1%
 ```
 
-Ridge regression achieves R²=0.823 --- respectable for a linear model
-capturing \~82% of variance. But metallurgical relationships are
-inherently nonlinear: sulfur's negative impact intensifies beyond
-thresholds, grind size effects saturate, and mineral types interact with
-processing parameters.
+Ridge regression achieves R²=0.823 --- respectable for a linear model capturing \~82% of variance. But metallurgical relationships are inherently nonlinear: sulfur's negative impact intensifies beyond thresholds, grind size effects saturate, and mineral types interact with processing parameters.
 
-XGBoost captures these interactions, improving R² to 0.912 and reducing
-MAE by 30%. A 2.18% MAE means predictions are typically within ±2% of
-actual recovery --- operationally significant when a 1% recovery change
-on 50,000 tonnes/day of 2 g/t ore is worth \$100,000+/month.
+XGBoost captures these interactions, improving R² to 0.912 and reducing MAE by 30%. A 2.18% MAE means predictions are typically within ±2% of actual recovery --- operationally significant when a 1% recovery change on 50,000 tonnes/day of 2 g/t ore is worth \$100,000+/month.
 
 ### Feature Importance: What Drives Recovery?
 ```python
@@ -569,23 +523,13 @@ Importance by Category:
 ```
 
 
-The dominant factor is mineral type (24%), particularly the refractory
-sulfide category (18.5% alone). This makes metallurgical sense:
-refractory ores require fundamentally different processing (roasting,
-pressure oxidation, ultra-fine grinding) compared to free-milling gold.
+The dominant factor is mineral type (24%), particularly the refractory sulfide category (18.5% alone). This makes metallurgical sense: refractory ores require fundamentally different processing (roasting, pressure oxidation, ultra-fine grinding) compared to free-milling gold.
 
-Sulfur content is second (14.7%) --- the primary indicator of refractory
-behavior. High sulfur means gold is locked in pyrite/arsenopyrite
-lattices, inaccessible to cyanide without pre-treatment.
+Sulfur content is second (14.7%) --- the primary indicator of refractory behavior. High sulfur means gold is locked in pyrite/arsenopyrite lattices, inaccessible to cyanide without pre-treatment.
 
-The `liberation_proxy` (BWI × grind size,
-11.2%) captures the energy-liberation tradeoff: harder ores (high BWI)
-need finer grinding (low P80) for adequate liberation, but excessive
-grinding causes slime formation and losses.
+The `liberation_proxy` (BWI × grind size, 11.2%) captures the energy-liberation tradeoff: harder ores (high BWI) need finer grinding (low P80) for adequate liberation, but excessive grinding causes slime formation and losses.
 
-Grade features (13.1%) have moderate importance --- recovery often
-improves slightly with grade due to cleaner mineral separation, but the
-relationship is secondary to mineralogy and processing.
+Grade features (13.1%) have moderate importance --- recovery often improves slightly with grade due to cleaner mineral separation, but the relationship is secondary to mineralogy and processing.
 
 ### Scenario Analysis: Optimizing Processing Decisions
 ```python
@@ -744,35 +688,17 @@ Economic Impact (Annual):
   Additional revenue: $147.8M/year
 ```
 
-For this refractory sulfide ore, finer grinding provides the largest
-single improvement (+2.57%). Combined with pH optimization and modest
-reagent increase, recovery improves from 76.3% to 80.2% --- a 3.89% gain
-worth \$147.8M annually on this throughput.
+For this refractory sulfide ore, finer grinding provides the largest single improvement (+2.57%). Combined with pH optimization and modest reagent increase, recovery improves from 76.3% to 80.2% --- a 3.89% gain worth \$147.8M annually on this throughput.
 
-This scenario analysis transforms the model from prediction tool to
-decision support system. Metallurgists can ask: "Should we invest \$50M
-in a finer grinding circuit for this ore body?" The model provides a
-data-driven answer based on expected recovery uplift.
+This scenario analysis transforms the model from prediction tool to decision support system. Metallurgists can ask: "Should we invest \$50M in a finer grinding circuit for this ore body?" The model provides a data-driven answer based on expected recovery uplift.
 
 ### Key Takeaways
-1.  [Nonlinear models outperform linear baselines by 30% --- XGBoost
-    (R²=0.912, MAE=2.18%) beats Ridge regression (R²=0.823, MAE=3.12%)
-    by capturing mineralogy-processing interactions]
-2.  [Mineral type is the dominant predictor (24%) --- Refractory
-    sulfides, free-milling gold, and oxide ores have fundamentally
-    different recovery profiles that linear scoring misses]
-3.  [Sulfur content indicates refractory behavior (15%) --- High sulfur
-    locks gold in sulfide lattices, requiring roasting or ultra-fine
-    grinding for liberation]
-4.  [Liberation proxy (BWI × grind size) captures energy-recovery
-    tradeoff (11%) --- Harder ores need finer grinding, but relationship
-    is nonlinear with diminishing returns]
-5.  [Scenario modeling enables cost-benefit analysis --- A 3.89%
-    recovery improvement via finer grinding can justify \$50M+ capital
-    if annual revenue gain exceeds \$100M]
-6.  [Feature engineering matters --- Metallurgical ratios (Au/S, Fe/S),
-    interaction terms (liberation proxy), and deviation metrics (pH from
-    optimal) improve model interpretability and accuracy]
+1.  [Nonlinear models outperform linear baselines by 30% --- XGBoost (R²=0.912, MAE=2.18%) beats Ridge regression (R²=0.823, MAE=3.12%) by capturing mineralogy-processing interactions]
+2.  [Mineral type is the dominant predictor (24%) --- Refractory sulfides, free-milling gold, and oxide ores have fundamentally different recovery profiles that linear scoring misses]
+3.  [Sulfur content indicates refractory behavior (15%) --- High sulfur locks gold in sulfide lattices, requiring roasting or ultra-fine grinding for liberation]
+4.  [Liberation proxy (BWI × grind size) captures energy-recovery tradeoff (11%) --- Harder ores need finer grinding, but relationship is nonlinear with diminishing returns]
+5.  [Scenario modeling enables cost-benefit analysis --- A 3.89% recovery improvement via finer grinding can justify \$50M+ capital if annual revenue gain exceeds \$100M]
+6.  [Feature engineering matters --- Metallurgical ratios (Au/S, Fe/S), interaction terms (liberation proxy), and deviation metrics (pH from optimal) improve model interpretability and accuracy]
 
 ### Production Implementation
 ```python
@@ -910,53 +836,17 @@ Pipeline complete!
 ======================================================================
 ```
 
-Metallurgical recovery is the financial hinge between resource and
-revenue. A 1% recovery improvement on a mid-sized gold operation (50,000
-t/day, 2.5 g/t) adds \$38M annually. Yet recovery remains the least
-predictable variable in mining economics, relegated to empirical test
-work and hand-fitted curves that don't generalize when ore
-characteristics change.
+Metallurgical recovery is the financial hinge between resource and revenue. A 1% recovery improvement on a mid-sized gold operation (50,000 t/day, 2.5 g/t) adds \$38M annually. Yet recovery remains the least predictable variable in mining economics, relegated to empirical test work and hand-fitted curves that don't generalize when ore characteristics change.
 
-Machine learning transforms recovery from lab curiosity to operational
-decision support. By modeling the relationships between grade,
-mineralogy, hardness, grind size, and processing conditions, engineers
-gain:
+Machine learning transforms recovery from lab curiosity to operational decision support. By modeling the relationships between grade, mineralogy, hardness, grind size, and processing conditions, engineers gain:
 
-- Predictive capability --- Forecast recovery across varying ore types
-  without exhaustive test campaigns
-- Scenario analysis --- Evaluate processing changes (finer grinding,
-  reagent adjustments) before capital commitment
-- Prioritized test work --- Focus lab resources where model uncertainty
-  is highest
-- Real-time optimization --- Adjust mill parameters as ore
-  characteristics shift
+- Predictive capability --- Forecast recovery across varying ore types without exhaustive test campaigns
+- Scenario analysis --- Evaluate processing changes (finer grinding, reagent adjustments) before capital commitment
+- Prioritized test work --- Focus lab resources where model uncertainty is highest
+- Real-time optimization --- Adjust mill parameters as ore characteristics shift
 
-The XGBoost model (R²=0.912, MAE=2.18%) captures nonlinear interactions
-that linear regression misses: sulfur's threshold effects, grind size
-saturation, pH-reagent dependencies. Feature importance reveals that
-mineral type (24%) dominates --- refractory sulfides require
-fundamentally different processing than free-milling ores despite
-similar grades.
+The XGBoost model (R²=0.912, MAE=2.18%) captures nonlinear interactions that linear regression misses: sulfur's threshold effects, grind size saturation, pH-reagent dependencies. Feature importance reveals that mineral type (24%) dominates --- refractory sulfides require fundamentally different processing than free-milling ores despite similar grades.
 
-For Barrick's Goldstrike, a 2% recovery improvement meant \$50M/year.
-Your operation's value may be \$10M or \$200M, but the principle holds:
-accurate recovery models convert guesswork into science. The same
-gradient boosting that optimizes ad clicks can optimize gold extraction.
-Every fraction of a percent recovered flows directly to the bottom line.
-::::About this project:
+For Barrick's Goldstrike, a 2% recovery improvement meant \$50M/year. Your operation's value may be \$10M or \$200M, but the principle holds: accurate recovery models convert guesswork into science. The same gradient boosting that optimizes ad clicks can optimize gold extraction. Every fraction of a percent recovered flows directly to the bottom line. About this project:
 
-Data: 1,000 synthetic ore samples (Au, Cu, S, Fe, As, BWI, grind size,
-pH, reagents, mineral type)\
-Models: Ridge regression (R²=0.823, baseline), XGBoost (R²=0.912,
-MAE=2.18%)\
-Key Features: Mineral type (23.7%), Sulfur/refractoriness (25.2%),
-Processing params (23.1%)\
-Business Value: 3.89% recovery improvement → \$147.8M/year additional
-revenue (example scenario)
-::::::::::::By [Kyle Jones](https://medium.com/@kyle-t-jones) on
-[October 9, 2025](https://medium.com/p/a54f8f0de66c).
-
-[Canonical
-link](https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c)
-
-Exported from [Medium](https://medium.com) on November 10, 2025.
+Data: 1,000 synthetic ore samples (Au, Cu, S, Fe, As, BWI, grind size, pH, reagents, mineral type)\ Models: Ridge regression (R²=0.823, baseline), XGBoost (R²=0.912, MAE=2.18%)\ Key Features: Mineral type (23.7%), Sulfur/refractoriness (25.2%), Processing params (23.1%)\ Business Value: 3.89% recovery improvement → \$147.8M/year additional revenue (example scenario)
