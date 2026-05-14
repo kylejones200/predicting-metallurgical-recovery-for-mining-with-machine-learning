@@ -1,7 +1,7 @@
 # Predicting Metallurgical Recovery for Mining with Machine Learning
 
-**Published:** 2025-10-09
-**Medium:** [https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c](https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c)
+Published: 2025-10-09
+Medium: [https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c](https://medium.com/@kyle-t-jones/predicting-metallurgical-recovery-for-mining-with-machine-learning-a54f8f0de66c)
 
 ## About
 

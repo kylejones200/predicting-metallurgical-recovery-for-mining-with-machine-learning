@@ -34,7 +34,7 @@ Elemental assays (Au, Cu, Fe, S, As, Ag) for various mineral systems.
 Since complete public recovery databases are rare, we generate recovery labels using realistic physical relationships. The sulfur effect shows that high sulfur (refractory sulfides) reduces recovery unless roasted. The hardness and grind interaction demonstrates that finer grinding improves liberation but has diminishing returns. Grade correlation reveals that higher grades often achieve slightly better recovery (cleaner separation). Mineral type differences show that free-milling gold versus refractory versus oxide have distinct recovery profiles.
 
 
-**Output:**
+Output:
 ```
 Generated 1000 ore samples:
   Au grade: 0.50 - 14.87 g/t (mean: 2.34)
@@ -115,7 +115,7 @@ def prepare_recovery_features(df):
     return features, y, numeric_features, categorical_features
 ```
 
-**Output:**
+Output:
 ```
 Feature Engineering:
   Numeric features: 17
@@ -239,7 +239,7 @@ def train_recovery_models(features, y, numeric_features, categorical_features):
     }
 ```
 
-**Output:**
+Output:
 ```
 Train/Test Split:
   Training: 800 samples
@@ -328,7 +328,7 @@ def analyze_feature_importance(xgb_model, numeric_features, categorical_features
     return importance_df
 ```
 
-**Output:**
+Output:
 ```
 ======================================================================
 FEATURE IMPORTANCE ANALYSIS
@@ -490,7 +490,7 @@ def scenario_analysis(xgb_model, base_sample, numeric_features, categorical_feat
     return scenario_df
 ```
 
-**Output (example for refractory sulfide ore):**
+Output (example for refractory sulfide ore):
 ```
 ======================================================================
 SCENARIO ANALYSIS: PROCESSING OPTIMIZATION
@@ -532,7 +532,7 @@ Nonlinear models outperform linear baselines by 30% as XGBoost (R²=0.912, MAE=2
 
 
 
-**Full Output:**
+Full Output:
 ```
 ======================================================================
 METALLURGICAL RECOVERY PREDICTION WITH MACHINE LEARNING
@@ -645,10 +645,10 @@ Metallurgical recovery is the financial hinge between resource and revenue. A 1%
 
 Machine learning transforms recovery from lab curiosity to operational decision support. By modeling the relationships between grade, mineralogy, hardness, grind size, and processing conditions, engineers gain:
 
-- **Predictive capability** - Forecast recovery across varying ore types without exhaustive test campaigns
-- **Scenario analysis** - Evaluate processing changes (finer grinding, reagent adjustments) before capital commitment
-- **Prioritized test work** - Focus lab resources where model uncertainty is highest
-- **Real-time optimization** - Adjust mill parameters as ore characteristics shift
+- Predictive capability - Forecast recovery across varying ore types without exhaustive test campaigns
+- Scenario analysis - Evaluate processing changes (finer grinding, reagent adjustments) before capital commitment
+- Prioritized test work - Focus lab resources where model uncertainty is highest
+- Real-time optimization - Adjust mill parameters as ore characteristics shift
 
 The XGBoost model (R²=0.912, MAE=2.18%) captures nonlinear interactions that linear regression misses: sulfur's threshold effects, grind size saturation, pH-reagent dependencies. Feature importance reveals that mineral type (24%) dominates—refractory sulfides require fundamentally different processing than free-milling ores despite similar grades.
 
@@ -656,10 +656,10 @@ For Barrick's Goldstrike, a 2% recovery improvement meant $50M/year. Your operat
 
 ---
 
-**Data:** 1,000 synthetic ore samples (Au, Cu, S, Fe, As, BWI, grind size, pH, reagents, mineral type)  
-**Models:** Ridge regression (R²=0.823, baseline), XGBoost (R²=0.912, MAE=2.18%)  
-**Key Features:** Mineral type (23.7%), Sulfur/refractoriness (25.2%), Processing params (23.1%)  
-**Business Value:** 3.89% recovery improvement → $147.8M/year additional revenue (example scenario)
+Data: 1,000 synthetic ore samples (Au, Cu, S, Fe, As, BWI, grind size, pH, reagents, mineral type)  
+Models: Ridge regression (R²=0.823, baseline), XGBoost (R²=0.912, MAE=2.18%)  
+Key Features: Mineral type (23.7%), Sulfur/refractoriness (25.2%), Processing params (23.1%)  
+Business Value: 3.89% recovery improvement → $147.8M/year additional revenue (example scenario)
 
 ## Complete Implementation
 
