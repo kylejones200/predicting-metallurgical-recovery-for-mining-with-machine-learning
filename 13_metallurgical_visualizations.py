@@ -19,12 +19,10 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
-import warnings
 
 
 
 from pathlib import Path
-warnings.filterwarnings('ignore')
 
 def apply_minimalist_style_manual(ax):
     """Apply minimalist style components manually to axis."""
