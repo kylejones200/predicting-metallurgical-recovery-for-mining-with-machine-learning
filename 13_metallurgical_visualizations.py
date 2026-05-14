@@ -245,18 +245,14 @@ def create_feature_importance_plot(plot: bool = False):
 def main():
     """Generate all visualizations for Blog 13."""
     set_tufte_defaults()
-    logger.info("="*70)
     logger.info("Blog 13: Metallurgical Recovery - Visualizations")
-    logger.info("="*70)
     logger.info()
     
     create_main_recovery_prediction_plot()
     create_feature_importance_plot()
     
     logger.info()
-    logger.info("="*70)
     logger.info("All visualizations generated successfully!")
-    logger.info("="*70)
     logger.info()
     logger.info("Files created:")
     logger.info("  - 13_metallurgical_recovery_main.png")
