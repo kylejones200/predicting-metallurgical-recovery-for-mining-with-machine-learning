@@ -1,6 +1,4 @@
 import signalplot
-import sys
-import os
 
 import logging
 logging.basicConfig(
@@ -16,13 +14,12 @@ Creates minimalist-style visualizations for recovery prediction models.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_absolute_error
 
 
 
-from pathlib import Path
 
 def apply_minimalist_style_manual(ax):
     """Apply minimalist style components manually to axis."""
@@ -141,7 +138,7 @@ def create_main_recovery_prediction_plot(plot: bool = False):
         ax.text(0.05, 0.95, metrics_text,
                transform=ax.transAxes, fontsize=9,
                verticalalignment='top',
-               bbox=dict(boxstyle='round', facecolor='white', edgecolor='black', linewidth=1))
+               bbox={'boxstyle': 'round', 'facecolor': 'white', 'edgecolor': 'black', 'linewidth': 1})
     
         ax.set_aspect('equal')
         ax.set_xlim(min_val - 2, max_val + 2)
@@ -152,7 +149,7 @@ def create_main_recovery_prediction_plot(plot: bool = False):
                     dpi=300, bbox_inches='tight')
         plt.close()
     
-    logger.info(f"✓ Main recovery prediction visualization saved")
+    logger.info("✓ Main recovery prediction visualization saved")
     logger.info(f"  Test R²: {test_r2:.3f}, MAE: {test_mae:.2f}%")
 
 def create_feature_importance_plot(plot: bool = False):
@@ -199,8 +196,8 @@ def create_feature_importance_plot(plot: bool = False):
                    f'{val:.3f}',
                    ha='left', va='center', fontsize=9, 
                    fontweight='bold', color='black',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='white', 
-                            edgecolor='none', alpha=0.8))
+                   bbox={'boxstyle': 'round,pad=0.3', 'facecolor': 'white', 
+                            'edgecolor': 'none', 'alpha': 0.8})
     
     # Apply minimalist style
         apply_minimalist_style_manual(ax)
