@@ -192,7 +192,7 @@ def create_main_recovery_prediction_plot(plot: bool = False):
 
         plt.tight_layout()
         plt.savefig(
-            "/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_recovery_main.png",
+            "outputs/13_metallurgical_recovery_main.png",
             dpi=300,
             bbox_inches="tight",
         )
@@ -301,7 +301,7 @@ def create_feature_importance_plot(plot: bool = False):
 
         plt.tight_layout()
         plt.savefig(
-            "/Users/k.jones/Desktop/blogs/blog_posts/13_metallurgical_feature_importance.png",
+            "outputs/13_metallurgical_feature_importance.png",
             dpi=300,
             bbox_inches="tight",
         )
