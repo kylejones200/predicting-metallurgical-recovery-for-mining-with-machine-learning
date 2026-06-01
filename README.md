@@ -11,14 +11,7 @@ Metallurgical recovery --- the percentage of valuable metal successfully extract
 
 Machine learning augments metallurgical test work. By modeling the relationships between ore properties (grade, mineralogy, hardness, grain size) and recovery outcomes, engineers can forecast mill performance across varying ore types, simulate processing scenarios, and prioritize test campaigns where uncertainty is highest.
 
-## About
 
-Place the code for this article in this repository.
-The original article export is saved as `article.md`.
-
-## Files
-
-Add your `.ipynb`, `.py`, `.yaml`, `.js`, `.ts`, or other project files here.
 
 ## Disclaimer
 
